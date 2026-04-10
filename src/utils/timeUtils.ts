@@ -5,7 +5,7 @@ export function getNow(timezone: string): DateTime {
 }
 
 export function convertTime(
-  sourceTimezone: string,
+  _sourceTimezone: string,
   targetTimezone: string,
   dateTime: DateTime
 ): DateTime {
