@@ -83,7 +83,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <Header
           isDark={isDark}
           onThemeToggle={() => setIsDark(d => !d)}
@@ -108,8 +108,8 @@ export default function App() {
           ))}
         </div>
 
-        {/* Call Planner + Meeting Overlap */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {/* Call Planner + Meeting Overlap stacked */}
+        <div className="max-w-3xl mx-auto space-y-6">
           <CallPlanner
             cityIds={cityIds}
             baseCityIndex={baseCityIndex}
