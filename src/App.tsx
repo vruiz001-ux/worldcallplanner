@@ -109,7 +109,8 @@ export default function App() {
         </div>
 
         {/* Call Planner + Meeting Overlap stacked */}
-        <div className="max-w-2xl mx-auto space-y-6">
+        <div className="flex flex-col items-center">
+        <div className="w-full max-w-2xl space-y-6">
           <CallPlanner
             cityIds={cityIds}
             baseCityIndex={baseCityIndex}
@@ -127,6 +128,7 @@ export default function App() {
             planTime={planTime}
             baseCityIndex={baseCityIndex}
           />
+        </div>
         </div>
 
         <footer className="mt-12 text-center text-xs text-slate-400 dark:text-slate-500">
