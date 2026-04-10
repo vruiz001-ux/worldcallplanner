@@ -11,6 +11,21 @@ import {
   formatDate,
 } from '../utils/timeUtils';
 
+// Generate 30-min time slots for the dropdown
+const TIME_SLOTS: { value: string; label12: string; label24: string }[] = [];
+for (let h = 0; h < 24; h++) {
+  for (const m of [0, 30]) {
+    const hh = String(h).padStart(2, '0');
+    const mm = String(m).padStart(2, '0');
+    const value = `${hh}:${mm}`;
+    const label24 = value;
+    const period = h < 12 ? 'AM' : 'PM';
+    const h12 = h === 0 ? 12 : h > 12 ? h - 12 : h;
+    const label12 = `${h12}:${mm} ${period}`;
+    TIME_SLOTS.push({ value, label12, label24 });
+  }
+}
+
 interface CallPlannerProps {
   cityIds: string[];
   baseCityIndex: number;
@@ -106,14 +121,19 @@ export function CallPlanner({
 
         <div>
           <label className="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1 uppercase tracking-wider">
-            Time
+            Meeting time
           </label>
-          <input
-            type="time"
+          <select
             value={planTime}
             onChange={e => onPlanTimeChange(e.target.value)}
             className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 outline-none focus:border-blue-400"
-          />
+          >
+            {TIME_SLOTS.map(slot => (
+              <option key={slot.value} value={slot.value}>
+                {use24h ? slot.label24 : slot.label12}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 

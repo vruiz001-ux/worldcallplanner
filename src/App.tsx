@@ -24,8 +24,9 @@ export default function App() {
   const [use24h, setUse24h] = useLocalStorage<boolean>('wcp-24h', false);
 
   const now = DateTime.now();
+  const roundedMin = now.minute < 30 ? '00' : '30';
   const [planDate, setPlanDate] = useState(now.toFormat('yyyy-MM-dd'));
-  const [planTime, setPlanTime] = useState(now.toFormat('HH:mm'));
+  const [planTime, setPlanTime] = useState(`${now.toFormat('HH')}:${roundedMin}`);
   const [tick, setTick] = useState(0);
 
   // Live clock tick every second
@@ -82,7 +83,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 sm:py-10">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <Header
           isDark={isDark}
           onThemeToggle={() => setIsDark(d => !d)}
