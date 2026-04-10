@@ -4,7 +4,6 @@ import {
   convertTime,
   getDayDifference,
   getTimeOfDay,
-  getTimeOfDayLabel,
   getTimeOfDayColor,
   getTimeOfDayBg,
   formatTime12,
@@ -86,7 +85,7 @@ export function CallPlanner({
               const c = getCityById(id);
               return (
                 <option key={id} value={idx}>
-                  {c?.emoji} {c?.city}
+                  {c?.city} ({c?.region})
                 </option>
               );
             })}
@@ -119,25 +118,22 @@ export function CallPlanner({
       </div>
 
       {isValid && (
-        <div className="space-y-2">
+        <div className="space-y-1.5">
           {/* Base city */}
           <div className="flex items-center gap-3 px-3 py-2 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20">
-            <span className="text-base">{baseCity.emoji}</span>
             <div className="flex-1 min-w-0">
               <div className="text-sm font-medium text-slate-800 dark:text-slate-100">
                 {baseCity.city}
               </div>
-              <div className="text-[11px] text-slate-500 dark:text-slate-400">
-                {baseCity.country}
-              </div>
+              <div className="text-[10px] text-slate-400">{baseCity.region}</div>
             </div>
             <div className="text-right">
               <div className="text-sm font-semibold text-slate-800 dark:text-slate-100 tabular-nums">
                 {use24h ? formatTime24(baseDt) : formatTime12(baseDt)}
               </div>
-              <div className="text-[11px] text-slate-400">{formatDate(baseDt)}</div>
+              <div className="text-[10px] text-slate-400">{formatDate(baseDt)}</div>
             </div>
-            <span className="text-[10px] font-medium text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-500/20 px-1.5 py-0.5 rounded">
+            <span className="text-[9px] font-semibold text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-500/20 px-1.5 py-0.5 rounded">
               BASE
             </span>
           </div>
@@ -151,27 +147,24 @@ export function CallPlanner({
                 key={city.id}
                 className="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-700/50 border border-slate-100 dark:border-slate-700"
               >
-                <span className="text-base">{city.emoji}</span>
                 <div className="flex-1 min-w-0">
                   <div className="text-sm font-medium text-slate-800 dark:text-slate-100">
                     {city.city}
                   </div>
-                  <div className="text-[11px] text-slate-500 dark:text-slate-400">
-                    {city.country}
-                  </div>
+                  <div className="text-[10px] text-slate-400">{city.region}</div>
                 </div>
-                <div className="text-right">
+                <div className="text-right shrink-0">
                   <div className="text-sm font-semibold text-slate-800 dark:text-slate-100 tabular-nums">
                     {use24h ? formatTime24(converted) : formatTime12(converted)}
                   </div>
-                  <div className="text-[11px] text-slate-400">{formatDate(converted)}</div>
+                  <div className="text-[10px] text-slate-400">{formatDate(converted)}</div>
                 </div>
-                <div className="flex flex-col items-end gap-0.5">
-                  <span className={`text-[10px] font-medium px-1.5 py-0.5 rounded ${getTimeOfDayBg(tod)} ${getTimeOfDayColor(tod)}`}>
-                    {getTimeOfDayLabel(tod)}
+                <div className="flex flex-col items-end gap-0.5 shrink-0">
+                  <span className={`text-[9px] font-medium px-1.5 py-0.5 rounded ${getTimeOfDayBg(tod)} ${getTimeOfDayColor(tod)}`}>
+                    {tod === 'business' ? 'OK' : tod === 'evening' ? 'Late' : 'Sleep'}
                   </span>
                   {dayDiff !== 'Same day' && (
-                    <span className="text-[10px] font-medium text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded">
+                    <span className="text-[9px] font-medium text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded">
                       {dayDiff}
                     </span>
                   )}

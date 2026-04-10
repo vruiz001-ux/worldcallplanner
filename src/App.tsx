@@ -64,7 +64,7 @@ export default function App() {
       if (!city) return '';
       const local = convertTime(baseCity.timezone, city.timezone, baseDt);
       const marker = idx === baseCityIndex ? ' (BASE)' : '';
-      return `${city.emoji} ${city.city}: ${fmt(local)} — ${formatDate(local)}${marker}`;
+      return `${city.city}: ${fmt(local)} — ${formatDate(local)}${marker}`;
     });
 
     const text = `World Call Planner\n${'─'.repeat(30)}\n${lines.join('\n')}`;
@@ -90,7 +90,6 @@ export default function App() {
               cityId={id}
               dateTime={currentTime}
               onCityChange={newId => handleCityChange(idx, newId)}
-              excludeCityIds={cityIds}
               use24h={use24h}
               isBase={idx === baseCityIndex}
               onSetBase={() => setBaseCityIndex(idx)}

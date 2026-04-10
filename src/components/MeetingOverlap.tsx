@@ -52,7 +52,7 @@ export function MeetingOverlap({ cityIds, planDate, planTime, baseCityIndex }: M
           return (
             <div key={city.id} className="flex items-center gap-0">
               <div className="w-24 shrink-0 text-xs text-slate-600 dark:text-slate-300 truncate pr-2 font-medium">
-                {city.emoji} {city.city}
+                {city.city}
               </div>
               <div className="flex flex-1 gap-px min-w-0">
                 {hours.map(h => {

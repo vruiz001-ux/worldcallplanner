@@ -1,52 +1,66 @@
 export interface CityTimezone {
   id: string;
   city: string;
-  country: string;
+  region: string;
   timezone: string;
-  emoji: string;
 }
 
-export const CITIES: CityTimezone[] = [
-  { id: 'new-york', city: 'New York', country: 'United States', timezone: 'America/New_York', emoji: '🗽' },
-  { id: 'los-angeles', city: 'Los Angeles', country: 'United States', timezone: 'America/Los_Angeles', emoji: '🌴' },
-  { id: 'chicago', city: 'Chicago', country: 'United States', timezone: 'America/Chicago', emoji: '🏙️' },
-  { id: 'toronto', city: 'Toronto', country: 'Canada', timezone: 'America/Toronto', emoji: '🍁' },
-  { id: 'mexico-city', city: 'Mexico City', country: 'Mexico', timezone: 'America/Mexico_City', emoji: '🇲🇽' },
-  { id: 'sao-paulo', city: 'São Paulo', country: 'Brazil', timezone: 'America/Sao_Paulo', emoji: '🇧🇷' },
-  { id: 'buenos-aires', city: 'Buenos Aires', country: 'Argentina', timezone: 'America/Argentina/Buenos_Aires', emoji: '🇦🇷' },
-  { id: 'london', city: 'London', country: 'United Kingdom', timezone: 'Europe/London', emoji: '🇬🇧' },
-  { id: 'paris', city: 'Paris', country: 'France', timezone: 'Europe/Paris', emoji: '🇫🇷' },
-  { id: 'berlin', city: 'Berlin', country: 'Germany', timezone: 'Europe/Berlin', emoji: '🇩🇪' },
-  { id: 'madrid', city: 'Madrid', country: 'Spain', timezone: 'Europe/Madrid', emoji: '🇪🇸' },
-  { id: 'rome', city: 'Rome', country: 'Italy', timezone: 'Europe/Rome', emoji: '🇮🇹' },
-  { id: 'amsterdam', city: 'Amsterdam', country: 'Netherlands', timezone: 'Europe/Amsterdam', emoji: '🇳🇱' },
-  { id: 'warsaw', city: 'Warsaw', country: 'Poland', timezone: 'Europe/Warsaw', emoji: '🇵🇱' },
-  { id: 'moscow', city: 'Moscow', country: 'Russia', timezone: 'Europe/Moscow', emoji: '🇷🇺' },
-  { id: 'istanbul', city: 'Istanbul', country: 'Turkey', timezone: 'Europe/Istanbul', emoji: '🇹🇷' },
-  { id: 'cairo', city: 'Cairo', country: 'Egypt', timezone: 'Africa/Cairo', emoji: '🇪🇬' },
-  { id: 'johannesburg', city: 'Johannesburg', country: 'South Africa', timezone: 'Africa/Johannesburg', emoji: '🇿🇦' },
-  { id: 'nairobi', city: 'Nairobi', country: 'Kenya', timezone: 'Africa/Nairobi', emoji: '🇰🇪' },
-  { id: 'dubai', city: 'Dubai', country: 'UAE', timezone: 'Asia/Dubai', emoji: '🇦🇪' },
-  { id: 'mumbai', city: 'Mumbai', country: 'India', timezone: 'Asia/Kolkata', emoji: '🇮🇳' },
-  { id: 'bangalore', city: 'Bangalore', country: 'India', timezone: 'Asia/Kolkata', emoji: '🇮🇳' },
-  { id: 'bangkok', city: 'Bangkok', country: 'Thailand', timezone: 'Asia/Bangkok', emoji: '🇹🇭' },
-  { id: 'singapore', city: 'Singapore', country: 'Singapore', timezone: 'Asia/Singapore', emoji: '🇸🇬' },
-  { id: 'hong-kong', city: 'Hong Kong', country: 'China', timezone: 'Asia/Hong_Kong', emoji: '🇭🇰' },
-  { id: 'shanghai', city: 'Shanghai', country: 'China', timezone: 'Asia/Shanghai', emoji: '🇨🇳' },
-  { id: 'tokyo', city: 'Tokyo', country: 'Japan', timezone: 'Asia/Tokyo', emoji: '🇯🇵' },
-  { id: 'seoul', city: 'Seoul', country: 'South Korea', timezone: 'Asia/Seoul', emoji: '🇰🇷' },
-  { id: 'sydney', city: 'Sydney', country: 'Australia', timezone: 'Australia/Sydney', emoji: '🇦🇺' },
-  { id: 'auckland', city: 'Auckland', country: 'New Zealand', timezone: 'Pacific/Auckland', emoji: '🇳🇿' },
-];
+// Region mapping from IANA prefix
+const REGION_LABELS: Record<string, string> = {
+  'Africa': 'Africa',
+  'America': 'Americas',
+  'Antarctica': 'Antarctica',
+  'Arctic': 'Arctic',
+  'Asia': 'Asia',
+  'Atlantic': 'Atlantic',
+  'Australia': 'Australia',
+  'Europe': 'Europe',
+  'Indian': 'Indian Ocean',
+  'Pacific': 'Pacific',
+};
+
+function formatCityName(raw: string): string {
+  return raw
+    .replace(/_/g, ' ')
+    .replace(/\//g, ' / ');
+}
+
+function buildCityList(): CityTimezone[] {
+  const allTimezones = Intl.supportedValuesOf('timeZone');
+
+  return allTimezones
+    .filter(tz => {
+      // Skip generic/legacy zones
+      const parts = tz.split('/');
+      return parts.length >= 2 && REGION_LABELS[parts[0]];
+    })
+    .map(tz => {
+      const parts = tz.split('/');
+      const region = REGION_LABELS[parts[0]] || parts[0];
+      // City is the last segment (handles America/Argentina/Buenos_Aires)
+      const cityRaw = parts[parts.length - 1];
+      const city = formatCityName(cityRaw);
+
+      return {
+        id: tz, // use IANA name as ID directly
+        city,
+        region,
+        timezone: tz,
+      };
+    })
+    .sort((a, b) => a.city.localeCompare(b.city));
+}
+
+export const CITIES: CityTimezone[] = buildCityList();
 
 export const DEFAULT_CITY_IDS = [
-  'new-york',
-  'london',
-  'paris',
-  'dubai',
-  'mumbai',
-  'tokyo',
-  'sydney',
+  'America/New_York',
+  'Europe/London',
+  'Europe/Paris',
+  'Asia/Dubai',
+  'Asia/Kolkata',
+  'Asia/Tokyo',
+  'Australia/Sydney',
 ];
 
 export function getCityById(id: string): CityTimezone | undefined {
