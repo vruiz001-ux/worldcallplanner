@@ -8,8 +8,17 @@ import { DEFAULT_CITY_IDS, getCityById } from './data/timezones';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { formatTime12, formatTime24, formatDate, convertTime } from './utils/timeUtils';
 
+// Validate stored city IDs — reset if they don't match current data
+function validateCityIds(ids: unknown): string[] {
+  if (!Array.isArray(ids) || ids.length !== 7) return DEFAULT_CITY_IDS;
+  const valid = ids.every(id => typeof id === 'string' && getCityById(id));
+  return valid ? ids : DEFAULT_CITY_IDS;
+}
+
 export default function App() {
-  const [cityIds, setCityIds] = useLocalStorage<string[]>('wcp-cities', DEFAULT_CITY_IDS);
+  const [rawCityIds, setRawCityIds] = useLocalStorage<string[]>('wcp-cities-v2', DEFAULT_CITY_IDS);
+  const cityIds = validateCityIds(rawCityIds);
+  const setCityIds = setRawCityIds;
   const [baseCityIndex, setBaseCityIndex] = useLocalStorage<number>('wcp-base', 0);
   const [isDark, setIsDark] = useLocalStorage<boolean>('wcp-dark', false);
   const [use24h, setUse24h] = useLocalStorage<boolean>('wcp-24h', false);
