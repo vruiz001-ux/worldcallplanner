@@ -41,7 +41,7 @@ export function WorldClockCard({
 
   return (
     <div
-      className={`relative rounded-2xl border p-3 flex flex-col items-center gap-2 transition-all ${
+      className={`relative rounded-2xl border p-2 sm:p-3 flex flex-col items-center gap-1.5 sm:gap-2 transition-all ${
         isBase
           ? 'border-blue-400 dark:border-blue-500 shadow-lg shadow-blue-500/10'
           : 'border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md'
@@ -55,24 +55,25 @@ export function WorldClockCard({
 
       <TimezoneSelect selectedCityId={cityId} onChange={onCityChange} />
 
-      <AnalogClock
-        hours={localDt.hour}
-        minutes={localDt.minute}
-        seconds={localDt.second}
-        size={110}
-        isDark={isDark}
-      />
+      <div className="w-[80px] h-[80px] sm:w-[110px] sm:h-[110px]">
+        <AnalogClock
+          hours={localDt.hour}
+          minutes={localDt.minute}
+          seconds={localDt.second}
+          isDark={isDark}
+        />
+      </div>
 
       <div className="text-center">
-        <div className="text-xl font-semibold text-slate-800 dark:text-slate-100 tabular-nums">
+        <div className="text-base sm:text-xl font-semibold text-slate-800 dark:text-slate-100 tabular-nums">
           {use24h ? formatTime24(localDt) : formatTime12(localDt)}
         </div>
-        <div className="text-[10px] text-slate-400 mt-0.5">{formatDate(localDt)}</div>
+        <div className="text-[9px] sm:text-[10px] text-slate-400 mt-0.5">{formatDate(localDt)}</div>
       </div>
 
       <div className="flex items-center gap-1.5">
-        <span className="text-[10px] text-slate-400 font-mono">{abbr}</span>
-        <span className={`text-[9px] font-medium px-1.5 py-0.5 rounded-full ${getTimeOfDayBg(tod)} ${getTimeOfDayColor(tod)}`}>
+        <span className="text-[9px] sm:text-[10px] text-slate-400 font-mono">{abbr}</span>
+        <span className={`text-[8px] sm:text-[9px] font-medium px-1.5 py-0.5 rounded-full ${getTimeOfDayBg(tod)} ${getTimeOfDayColor(tod)}`}>
           {localDt.hour >= 8 && localDt.hour < 18 ? '●' : '○'} {tod === 'business' ? 'OK' : tod === 'evening' ? 'Late' : 'Sleep'}
         </span>
       </div>
@@ -80,10 +81,7 @@ export function WorldClockCard({
       {!isBase && onSetBase && (
         <button
           onClick={onSetBase}
-          className="text-[9px] text-blue-500 hover:text-blue-600 dark:text-blue-400 font-medium transition-colors opacity-0 group-hover:opacity-100 hover:opacity-100 focus:opacity-100"
-          style={{ opacity: undefined }}
-          onMouseEnter={e => (e.currentTarget.style.opacity = '1')}
-          onMouseLeave={e => (e.currentTarget.style.opacity = '0.4')}
+          className="text-[9px] text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors opacity-50 hover:opacity-100"
         >
           Set as base
         </button>

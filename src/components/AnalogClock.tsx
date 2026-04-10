@@ -4,11 +4,11 @@ interface AnalogClockProps {
   hours: number;
   minutes: number;
   seconds: number;
-  size?: number;
   isDark?: boolean;
 }
 
-export function AnalogClock({ hours, minutes, seconds, size = 140, isDark = false }: AnalogClockProps) {
+export function AnalogClock({ hours, minutes, seconds, isDark = false }: AnalogClockProps) {
+  const size = 140; // viewBox size, SVG scales to container
   const center = size / 2;
   const radius = size / 2 - 8;
 
@@ -70,7 +70,7 @@ export function AnalogClock({ hours, minutes, seconds, size = 140, isDark = fals
   const minuteColor = isDark ? '#cbd5e1' : '#334155';
 
   return (
-    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`}>
+    <svg width="100%" height="100%" viewBox={`0 0 ${size} ${size}`}>
       {/* Face */}
       <circle cx={center} cy={center} r={radius} fill={faceColor} stroke={borderColor} strokeWidth="2" />
 

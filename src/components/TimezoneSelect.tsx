@@ -56,7 +56,7 @@ export function TimezoneSelect({ selectedCityId, onChange }: TimezoneSelectProps
       </button>
 
       {isOpen && (
-        <div className="absolute z-50 top-full mt-1 w-72 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-xl shadow-xl overflow-hidden">
+        <div className="absolute z-50 top-full mt-1 w-full min-w-[200px] sm:w-72 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-xl shadow-xl overflow-hidden">
           <div className="p-2 border-b border-slate-100 dark:border-slate-700">
             <input
               ref={inputRef}

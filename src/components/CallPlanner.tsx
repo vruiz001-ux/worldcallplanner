@@ -68,19 +68,19 @@ export function CallPlanner({
     .filter(Boolean) as { city: CityTimezone; converted: DateTime; idx: number }[];
 
   return (
-    <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm p-5">
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm p-4 sm:p-5">
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
+          <h2 className="text-base sm:text-lg font-semibold text-slate-800 dark:text-slate-100">
             Call Planning
           </h2>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-[10px] sm:text-xs text-slate-400 mt-0.5">
             Set a time in your base location to see it everywhere
           </p>
         </div>
         <button
           onClick={onCopy}
-          className="px-3 py-1.5 text-xs font-medium bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-500/20 transition-colors"
+          className="px-3 py-2 text-xs font-medium bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400 rounded-lg hover:bg-blue-100 dark:hover:bg-blue-500/20 transition-colors"
         >
           Copy summary
         </button>

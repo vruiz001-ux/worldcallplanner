@@ -18,51 +18,52 @@ export function MeetingOverlap({ cityIds, planDate, planTime, baseCityIndex }: M
   if (!baseDt.isValid) return null;
 
   const hours = Array.from({ length: 24 }, (_, i) => i);
+  const baseStartOfDay = baseDt.startOf('day');
 
   const cityData = cityIds.map(id => {
     const city = getCityById(id)!;
-    const localNow = baseDt.setZone(city.timezone);
-    const startOfDay = localNow.startOf('day');
-    return { city, startOfDay, offset: localNow.hour };
+    return { city };
   });
 
   return (
-    <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm p-5">
-      <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100 mb-1">
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-sm p-4 sm:p-5">
+      <h2 className="text-base sm:text-lg font-semibold text-slate-800 dark:text-slate-100 mb-1">
         Meeting Overlap
       </h2>
-      <p className="text-xs text-slate-400 mb-4">
-        Green blocks = business hours (8 AM – 6 PM). Find the best time for all.
+      <p className="text-[10px] sm:text-xs text-slate-400 mb-3 sm:mb-4">
+        Green = business hours (8 AM – 6 PM) in base timezone hours. Find the best window.
       </p>
 
-      <div className="space-y-2 overflow-x-auto">
+      <div className="space-y-1.5 sm:space-y-2">
         {/* Hour labels */}
         <div className="flex items-center gap-0">
-          <div className="w-24 shrink-0" />
+          <div className="w-16 sm:w-24 shrink-0" />
           <div className="flex flex-1 min-w-0">
-            {hours.filter((_, i) => i % 3 === 0).map(h => (
-              <div key={h} className="flex-1 text-[9px] text-slate-400 text-center font-mono" style={{ minWidth: 0 }}>
+            {hours.filter((_, i) => i % 6 === 0).map(h => (
+              <div key={h} className="flex-1 text-[8px] sm:text-[9px] text-slate-400 text-center font-mono" style={{ minWidth: 0 }}>
                 {String(h).padStart(2, '0')}
               </div>
             ))}
           </div>
         </div>
 
-        {cityData.map(({ city, offset }) => {
+        {cityData.map(({ city }) => {
           return (
             <div key={city.id} className="flex items-center gap-0">
-              <div className="w-24 shrink-0 text-xs text-slate-600 dark:text-slate-300 truncate pr-2 font-medium">
+              <div className="w-16 sm:w-24 shrink-0 text-[10px] sm:text-xs text-slate-600 dark:text-slate-300 truncate pr-1 sm:pr-2 font-medium">
                 {city.city}
               </div>
               <div className="flex flex-1 gap-px min-w-0">
                 {hours.map(h => {
-                  // Map this hour to local hour at destination
-                  const localHour = (h + offset) % 24;
+                  // Convert base hour to local hour at destination
+                  const baseHourDt = baseStartOfDay.plus({ hours: h });
+                  const localDt = baseHourDt.setZone(city.timezone);
+                  const localHour = localDt.hour;
                   const isBusiness = localHour >= 8 && localHour < 18;
                   return (
                     <div
                       key={h}
-                      className={`h-5 flex-1 rounded-sm transition-colors ${
+                      className={`h-4 sm:h-5 flex-1 rounded-sm transition-colors ${
                         isBusiness
                           ? 'bg-emerald-400/60 dark:bg-emerald-500/40'
                           : 'bg-slate-100 dark:bg-slate-700'
