@@ -45,34 +45,29 @@ export function TimezoneSelect({ selectedCityId, onChange }: TimezoneSelectProps
     <div ref={containerRef} className="relative w-full">
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-full flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 hover:border-blue-400 dark:hover:border-blue-400 transition-colors text-xs"
+        className="w-full flex items-center gap-1 px-2 py-1 sm:px-2.5 sm:py-1.5 rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 hover:border-blue-400 dark:hover:border-blue-400 transition-colors text-[10px] sm:text-xs"
       >
         <span className="truncate font-medium text-slate-700 dark:text-slate-200">
           {selected?.city ?? 'Select city'}
         </span>
-        <svg className="ml-auto w-3 h-3 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+        <svg className="ml-auto w-2.5 h-2.5 sm:w-3 sm:h-3 text-slate-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
           <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
       {isOpen && (
-        <div className="absolute z-50 top-full mt-1 w-full min-w-[200px] sm:w-72 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-xl shadow-xl overflow-hidden">
+        <div className="fixed sm:absolute inset-x-3 sm:inset-x-auto top-20 sm:top-full sm:mt-1 z-50 sm:w-72 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-xl shadow-xl overflow-hidden">
           <div className="p-2 border-b border-slate-100 dark:border-slate-700">
             <input
               ref={inputRef}
               type="text"
-              placeholder="Type to search any city..."
+              placeholder="Search city..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full px-3 py-1.5 text-sm rounded-lg bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 outline-none focus:border-blue-400 text-slate-800 dark:text-slate-200 placeholder:text-slate-400"
+              className="w-full px-3 py-2 sm:py-1.5 text-sm rounded-lg bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 outline-none focus:border-blue-400 text-slate-800 dark:text-slate-200 placeholder:text-slate-400"
             />
-            {!search && (
-              <div className="text-[10px] text-slate-400 mt-1 px-1">
-                {CITIES.length} cities available
-              </div>
-            )}
           </div>
-          <div className="max-h-64 overflow-y-auto">
+          <div className="max-h-60 sm:max-h-64 overflow-y-auto">
             {filtered.map(city => (
               <CityOption
                 key={city.id}

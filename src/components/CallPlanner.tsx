@@ -86,15 +86,15 @@ export function CallPlanner({
         </button>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-5">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 mb-4 sm:mb-5">
         <div>
-          <label className="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1 uppercase tracking-wider">
+          <label className="block text-[10px] sm:text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1 uppercase tracking-wider">
             Base location
           </label>
           <select
             value={baseCityIndex}
             onChange={e => onBaseChange(Number(e.target.value))}
-            className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 outline-none focus:border-blue-400"
+            className="w-full px-2 sm:px-3 py-2 text-xs sm:text-sm rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 outline-none focus:border-blue-400"
           >
             {cityIds.map((id, idx) => {
               const c = getCityById(id);
@@ -107,53 +107,55 @@ export function CallPlanner({
           </select>
         </div>
 
-        <div>
-          <label className="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1 uppercase tracking-wider">
-            Date
-          </label>
-          <input
-            type="date"
-            value={planDate}
-            onChange={e => onPlanDateChange(e.target.value)}
-            className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 outline-none focus:border-blue-400"
-          />
-        </div>
+        <div className="grid grid-cols-2 sm:contents gap-2">
+          <div>
+            <label className="block text-[10px] sm:text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1 uppercase tracking-wider">
+              Date
+            </label>
+            <input
+              type="date"
+              value={planDate}
+              onChange={e => onPlanDateChange(e.target.value)}
+              className="w-full px-2 sm:px-3 py-2 text-xs sm:text-sm rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 outline-none focus:border-blue-400"
+            />
+          </div>
 
-        <div>
-          <label className="block text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1 uppercase tracking-wider">
-            Meeting time
-          </label>
-          <select
-            value={planTime}
-            onChange={e => onPlanTimeChange(e.target.value)}
-            className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 outline-none focus:border-blue-400"
-          >
-            {TIME_SLOTS.map(slot => (
-              <option key={slot.value} value={slot.value}>
-                {use24h ? slot.label24 : slot.label12}
-              </option>
-            ))}
-          </select>
+          <div>
+            <label className="block text-[10px] sm:text-[11px] font-medium text-slate-500 dark:text-slate-400 mb-1 uppercase tracking-wider">
+              Meeting time
+            </label>
+            <select
+              value={planTime}
+              onChange={e => onPlanTimeChange(e.target.value)}
+              className="w-full px-2 sm:px-3 py-2 text-xs sm:text-sm rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-800 dark:text-slate-200 outline-none focus:border-blue-400"
+            >
+              {TIME_SLOTS.map(slot => (
+                <option key={slot.value} value={slot.value}>
+                  {use24h ? slot.label24 : slot.label12}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
       </div>
 
       {isValid && (
-        <div className="space-y-1.5">
+        <div className="space-y-1 sm:space-y-1.5">
           {/* Base city */}
-          <div className="flex items-center gap-3 px-3 py-2 rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20">
+          <div className="flex items-center gap-2 sm:gap-3 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-blue-50 dark:bg-blue-500/10 border border-blue-200 dark:border-blue-500/20">
             <div className="flex-1 min-w-0">
-              <div className="text-sm font-medium text-slate-800 dark:text-slate-100">
+              <div className="text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-100 truncate">
                 {baseCity.city}
               </div>
-              <div className="text-[10px] text-slate-400">{baseCity.region}</div>
+              <div className="text-[9px] sm:text-[10px] text-slate-400">{baseCity.region}</div>
             </div>
-            <div className="text-right">
-              <div className="text-sm font-semibold text-slate-800 dark:text-slate-100 tabular-nums">
+            <div className="text-right shrink-0">
+              <div className="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-100 tabular-nums">
                 {use24h ? formatTime24(baseDt) : formatTime12(baseDt)}
               </div>
-              <div className="text-[10px] text-slate-400">{formatDate(baseDt)}</div>
+              <div className="text-[9px] sm:text-[10px] text-slate-400">{formatDate(baseDt)}</div>
             </div>
-            <span className="text-[9px] font-semibold text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-500/20 px-1.5 py-0.5 rounded">
+            <span className="text-[8px] sm:text-[9px] font-semibold text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-500/20 px-1 sm:px-1.5 py-0.5 rounded shrink-0">
               BASE
             </span>
           </div>
@@ -165,26 +167,26 @@ export function CallPlanner({
             return (
               <div
                 key={city.id}
-                className="flex items-center gap-3 px-3 py-2 rounded-xl bg-slate-50 dark:bg-slate-700/50 border border-slate-100 dark:border-slate-700"
+                className="flex items-center gap-2 sm:gap-3 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg sm:rounded-xl bg-slate-50 dark:bg-slate-700/50 border border-slate-100 dark:border-slate-700"
               >
                 <div className="flex-1 min-w-0">
-                  <div className="text-sm font-medium text-slate-800 dark:text-slate-100">
+                  <div className="text-xs sm:text-sm font-medium text-slate-800 dark:text-slate-100 truncate">
                     {city.city}
                   </div>
-                  <div className="text-[10px] text-slate-400">{city.region}</div>
+                  <div className="text-[9px] sm:text-[10px] text-slate-400">{city.region}</div>
                 </div>
                 <div className="text-right shrink-0">
-                  <div className="text-sm font-semibold text-slate-800 dark:text-slate-100 tabular-nums">
+                  <div className="text-xs sm:text-sm font-semibold text-slate-800 dark:text-slate-100 tabular-nums">
                     {use24h ? formatTime24(converted) : formatTime12(converted)}
                   </div>
-                  <div className="text-[10px] text-slate-400">{formatDate(converted)}</div>
+                  <div className="text-[9px] sm:text-[10px] text-slate-400">{formatDate(converted)}</div>
                 </div>
                 <div className="flex flex-col items-end gap-0.5 shrink-0">
-                  <span className={`text-[9px] font-medium px-1.5 py-0.5 rounded ${getTimeOfDayBg(tod)} ${getTimeOfDayColor(tod)}`}>
+                  <span className={`text-[8px] sm:text-[9px] font-medium px-1 sm:px-1.5 py-0.5 rounded ${getTimeOfDayBg(tod)} ${getTimeOfDayColor(tod)}`}>
                     {tod === 'business' ? 'OK' : tod === 'evening' ? 'Late' : 'Sleep'}
                   </span>
                   {dayDiff !== 'Same day' && (
-                    <span className="text-[9px] font-medium text-amber-500 bg-amber-500/10 px-1.5 py-0.5 rounded">
+                    <span className="text-[8px] sm:text-[9px] font-medium text-amber-500 bg-amber-500/10 px-1 sm:px-1.5 py-0.5 rounded">
                       {dayDiff}
                     </span>
                   )}

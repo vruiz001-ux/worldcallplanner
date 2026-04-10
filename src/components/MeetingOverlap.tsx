@@ -110,11 +110,11 @@ function BestOverlap({ cityIds, baseDt }: { cityIds: string[]; baseDt: DateTime 
   const baseCity = getCityById(cityIds[0]);
 
   return (
-    <div className="mt-3 px-3 py-2 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20">
-      <div className="text-xs font-medium text-emerald-700 dark:text-emerald-400">
+    <div className="mt-2 sm:mt-3 px-2 sm:px-3 py-1.5 sm:py-2 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/20">
+      <div className="text-[10px] sm:text-xs font-medium text-emerald-700 dark:text-emerald-400">
         Best window: {String(startH).padStart(2, '0')}:00 – {String(endH).padStart(2, '0')}:00 ({baseCity?.city} time)
       </div>
-      <div className="text-[10px] text-emerald-600 dark:text-emerald-500 mt-0.5">
+      <div className="text-[9px] sm:text-[10px] text-emerald-600 dark:text-emerald-500 mt-0.5">
         {maxCount} of {cityIds.length} cities in business hours
       </div>
     </div>

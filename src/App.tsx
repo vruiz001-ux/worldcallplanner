@@ -83,7 +83,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+      <div className="max-w-6xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-8">
         <Header
           isDark={isDark}
           onThemeToggle={() => setIsDark(d => !d)}
@@ -93,7 +93,7 @@ export default function App() {
         />
 
         {/* Clock grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-2.5 sm:gap-4 mb-8">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-2 sm:gap-4 mb-6 sm:mb-8">
           {cityIds.map((id, idx) => (
             <WorldClockCard
               key={`${idx}-${id}`}
