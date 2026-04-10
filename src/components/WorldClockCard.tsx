@@ -41,9 +41,9 @@ export function WorldClockCard({
 
   return (
     <div
-      className={`relative rounded-2xl border p-3 flex flex-col items-center gap-2 transition-all ${
+      className={`relative overflow-visible rounded-2xl border p-3 flex flex-col items-center gap-2 transition-all ${
         isBase
-          ? 'border-blue-400 dark:border-blue-500 shadow-lg shadow-blue-500/10'
+          ? 'border-blue-400 dark:border-blue-500 shadow-lg shadow-blue-500/10 mt-3'
           : 'border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md'
       } bg-white dark:bg-slate-800`}
     >
