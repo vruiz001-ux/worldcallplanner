@@ -41,14 +41,14 @@ export function WorldClockCard({
 
   return (
     <div
-      className={`relative overflow-visible rounded-2xl border p-3 flex flex-col items-center gap-2 transition-all ${
+      className={`relative rounded-2xl border p-3 flex flex-col items-center gap-2 transition-all ${
         isBase
-          ? 'border-blue-400 dark:border-blue-500 shadow-lg shadow-blue-500/10 mt-3'
+          ? 'border-blue-400 dark:border-blue-500 shadow-lg shadow-blue-500/10'
           : 'border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md'
       } bg-white dark:bg-slate-800`}
     >
       {isBase && (
-        <div className="absolute -top-2 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-blue-500 text-white text-[9px] font-semibold rounded-full uppercase tracking-wider">
+        <div className="px-2 py-0.5 bg-blue-500 text-white text-[9px] font-semibold rounded-full uppercase tracking-wider">
           Base
         </div>
       )}
