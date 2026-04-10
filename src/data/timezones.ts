@@ -5,7 +5,6 @@ export interface CityTimezone {
   timezone: string;
 }
 
-// Region mapping from IANA prefix
 const REGION_LABELS: Record<string, string> = {
   'Africa': 'Africa',
   'America': 'Americas',
@@ -19,10 +18,24 @@ const REGION_LABELS: Record<string, string> = {
   'Pacific': 'Pacific',
 };
 
+// Rename legacy/confusing IANA city names to modern names
+const CITY_RENAMES: Record<string, string> = {
+  'Calcutta': 'Kolkata',
+  'Bombay': 'Mumbai',
+  'Madras': 'Chennai',
+  'Saigon': 'Ho Chi Minh',
+  'Rangoon': 'Yangon',
+  'Dacca': 'Dhaka',
+  'Katmandu': 'Kathmandu',
+  'Ujung_Pandang': 'Makassar',
+  'Ulan_Bator': 'Ulaanbaatar',
+  'Faeroe': 'Faroe',
+  'Asmera': 'Asmara',
+};
+
 function formatCityName(raw: string): string {
-  return raw
-    .replace(/_/g, ' ')
-    .replace(/\//g, ' / ');
+  const renamed = CITY_RENAMES[raw] || raw;
+  return renamed.replace(/_/g, ' ');
 }
 
 function buildCityList(): CityTimezone[] {
@@ -30,19 +43,17 @@ function buildCityList(): CityTimezone[] {
 
   return allTimezones
     .filter(tz => {
-      // Skip generic/legacy zones
       const parts = tz.split('/');
       return parts.length >= 2 && REGION_LABELS[parts[0]];
     })
     .map(tz => {
       const parts = tz.split('/');
       const region = REGION_LABELS[parts[0]] || parts[0];
-      // City is the last segment (handles America/Argentina/Buenos_Aires)
       const cityRaw = parts[parts.length - 1];
       const city = formatCityName(cityRaw);
 
       return {
-        id: tz, // use IANA name as ID directly
+        id: tz,
         city,
         region,
         timezone: tz,
@@ -58,7 +69,7 @@ export const DEFAULT_CITY_IDS = [
   'Europe/London',
   'Europe/Paris',
   'Asia/Dubai',
-  'Asia/Kolkata',
+  'Asia/Calcutta',
   'Asia/Tokyo',
   'Australia/Sydney',
 ];
