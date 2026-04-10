@@ -62,12 +62,20 @@ function buildCityList(): CityTimezone[] {
     .sort((a, b) => a.city.localeCompare(b.city));
 }
 
-export const CITIES: CityTimezone[] = buildCityList();
+// Custom entries not in IANA but useful
+const CUSTOM_CITIES: CityTimezone[] = [
+  { id: 'custom/donecle-toulouse', city: 'Donecle (Toulouse)', region: 'Europe', timezone: 'Europe/Paris' },
+];
+
+export const CITIES: CityTimezone[] = [
+  ...buildCityList(),
+  ...CUSTOM_CITIES,
+].sort((a, b) => a.city.localeCompare(b.city));
 
 export const DEFAULT_CITY_IDS = [
   'America/New_York',
   'Europe/London',
-  'Europe/Paris',
+  'custom/donecle-toulouse',
   'Asia/Dubai',
   'Asia/Calcutta',
   'Asia/Tokyo',
